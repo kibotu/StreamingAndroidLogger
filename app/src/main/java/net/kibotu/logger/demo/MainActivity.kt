@@ -9,7 +9,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.Logger
-import net.kibotu.server.LoggingWebServer
 import net.kibotu.server.LoggingWebServer.Companion.getAddressLog
 import net.kibotu.server.ResponseMessage
 import net.kibotu.server.SimpleWebServer

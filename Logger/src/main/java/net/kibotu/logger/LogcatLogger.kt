@@ -1,4 +1,4 @@
-package net.kibotu.logger.logger
+package net.kibotu.logger
 
 import android.os.Handler
 import android.os.Looper

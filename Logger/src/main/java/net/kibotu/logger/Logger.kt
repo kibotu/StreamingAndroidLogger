@@ -1,4 +1,4 @@
-package net.kibotu.logger.logger
+package net.kibotu.logger
 
 import android.app.Application
 import net.kibotu.ContextHelper
@@ -39,7 +39,7 @@ object Logger {
 
     @JvmStatic
     fun setDefaultTag(tag: String) {
-        Logger.TAG = tag
+        TAG = tag
     }
 
     /**
@@ -49,7 +49,7 @@ object Logger {
      */
     @JvmStatic
     fun addLogger(logger: ILogger) {
-        Logger.loggers.add(logger)
+        loggers.add(logger)
     }
 
     /**
@@ -61,7 +61,7 @@ object Logger {
     @JvmStatic
     fun addLogger(logger: ILogger, level: Level) {
         addLogger(logger)
-        Logger.logLevel = level
+        logLevel = level
     }
 
     /**

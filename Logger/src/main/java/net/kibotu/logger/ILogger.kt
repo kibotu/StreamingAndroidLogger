@@ -1,4 +1,4 @@
-package net.kibotu.logger.logger
+package net.kibotu.logger
 
 /**
  * Logging interface for concrete device specific logger.

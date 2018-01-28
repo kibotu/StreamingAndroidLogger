@@ -16,7 +16,11 @@ class App : MultiDexApplication() {
         super.onCreate()
 
         Logger.with(this)
-        Logger.addLogger(LogcatLogger(), Logger.Level.DEBUG)
+
+        Logger.addLogger(LogcatLogger(), if (BuildConfig.DEBUG)
+            Logger.Level.VERBOSE
+        else
+            Logger.Level.SILENT)
     }
 
     override fun onTerminate() {

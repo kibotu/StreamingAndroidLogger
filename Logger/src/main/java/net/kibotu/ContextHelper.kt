@@ -47,7 +47,7 @@ object ContextHelper {
     }
 
     @JvmStatic
-    fun getApplication(): Application? = context?.get() as Application
+    fun getApplication(): Application? = application?.get() as Application
 
     @JvmStatic
     fun getContext(): Context? = context?.get() as Context

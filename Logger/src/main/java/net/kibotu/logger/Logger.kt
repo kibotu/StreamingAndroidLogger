@@ -234,4 +234,11 @@ object Logger {
     private fun isEmpty(collection: Collection<*>?): Boolean {
         return collection == null || collection.isEmpty()
     }
+
+    fun Any?.log() {
+        this?.log(this.toString())
+    }
+
+    fun Any.log(message: Any?) = Logger.v((this as? LogTag)?.tag()
+            ?: this.javaClass.simpleName, "$message")
 }

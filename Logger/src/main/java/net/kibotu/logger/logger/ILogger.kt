@@ -3,9 +3,9 @@ package net.kibotu.logger.logger
 /**
  * Logging interface for concrete device specific logger.
  *
- *
  * Created by [Jan Rabe](https://about.me/janrabe).
  */
+
 interface ILogger {
 
     /**

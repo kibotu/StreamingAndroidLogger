@@ -17,6 +17,7 @@ import net.kibotu.ContextHelper.getContext
 /**
  * Created by [Jan Rabe](https://about.me/janrabe).
  */
+
 class LogcatLogger : ILogger {
 
     override fun debug(tag: String, message: String) {
@@ -72,7 +73,7 @@ class LogcatLogger : ILogger {
                 return@post
             }
             val snackbar = Snackbar.make(contentRoot, message, Snackbar.LENGTH_SHORT)
-            val text = snackbar.view.findViewById(android.support.design.R.id.snackbar_text)
+            val text: TextView = snackbar.view.findViewById(android.support.design.R.id.snackbar_text)
             text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             snackbar.show()
         }

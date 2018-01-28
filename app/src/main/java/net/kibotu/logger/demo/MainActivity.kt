@@ -1,8 +1,11 @@
 package net.kibotu.logger.demo
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import java.util.logging.Logger
+import android.support.v7.app.AppCompatActivity
+
+/**
+ * Created by [Jan Rabe](https://about.me/janrabe).
+ */
 
 class MainActivity : AppCompatActivity() {
 

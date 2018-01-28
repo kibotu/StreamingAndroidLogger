@@ -10,9 +10,9 @@ import java.util.*
  * Depending on Logging level it shows only higher prioritized logs.
  * For instance: if the Logging Level is set to info, no debug messages will be shown, etc.
  *
- *
  * Created by [Jan Rabe](https://about.me/janrabe).
  */
+
 object Logger {
 
     /**

@@ -39,16 +39,16 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.text.TextUtils.isEmpty;
-import static net.kibotu.server.LoggingWebServer.toJson;
+import static net.kibotu.server.LoggingWebServer2.toJson;
 
 
 /**
  * Implementation of a very basic HTTP server. The contents are loaded from the assets folder. This
  * server handles one request at a time. It only supports GET method.
  */
-public class SimpleWebServer implements Runnable {
+public class LoggingWebServer implements Runnable {
 
-    private static final String TAG = SimpleWebServer.class.getSimpleName();
+    private static final String TAG = LoggingWebServer.class.getSimpleName();
 
     public static final BlockingQueue<ResponseMessage> queue = new LinkedBlockingQueue<>();
 
@@ -77,7 +77,7 @@ public class SimpleWebServer implements Runnable {
     /**
      * WebServer constructor.
      */
-    public SimpleWebServer(int port, AssetManager assets) {
+    public LoggingWebServer(int port, AssetManager assets) {
         mPort = port;
         mAssets = assets;
     }

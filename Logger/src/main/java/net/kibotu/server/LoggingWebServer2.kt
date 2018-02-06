@@ -40,7 +40,7 @@ import java.util.concurrent.LinkedBlockingQueue
  * Implementation of a very basic HTTP server. The contents are loaded from the assets folder. This
  * server handles one request at a time. It only supports GET method.
  */
-class LoggingWebServer(
+internal class LoggingWebServer2(
         /**
          * The port number we listen to
          */
@@ -235,7 +235,7 @@ class LoggingWebServer(
 
     companion object {
 
-        private val TAG = LoggingWebServer::class.java.simpleName
+        private val TAG = LoggingWebServer2::class.java.simpleName
 
         val queue: BlockingQueue<ResponseMessage> = LinkedBlockingQueue()
 

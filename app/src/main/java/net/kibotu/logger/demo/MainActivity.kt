@@ -9,9 +9,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.Logger
-import net.kibotu.server.LoggingWebServer.Companion.getAddressLog
+import net.kibotu.server.LoggingWebServer2.Companion.getAddressLog
 import net.kibotu.server.ResponseMessage
-import net.kibotu.server.SimpleWebServer
+import net.kibotu.server.LoggingWebServer
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private var i = 0
 
-    private var simpleWebServer: SimpleWebServer? = null
+    private var loggingWebServer: LoggingWebServer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +38,15 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ msg ->
 
-                    SimpleWebServer.queue.add(ResponseMessage(msg))
+                    LoggingWebServer.queue.add(ResponseMessage(msg))
 
                 }, { it.printStackTrace() })
 
 
-        simpleWebServer = SimpleWebServer(8080, assets)
+        loggingWebServer = LoggingWebServer(8080, assets)
         Logger.snackbar("Start.")
         Logger.v(TAG, getAddressLog(8080))
-        simpleWebServer?.start()
+        loggingWebServer?.start()
 
         content.movementMethod = LinkMovementMethod.getInstance()
         content.text = getAddressLog(8080)
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        simpleWebServer?.stop()
+        loggingWebServer?.stop()
         subscribe?.dispose()
     }
 }

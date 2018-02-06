@@ -33,9 +33,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -53,6 +51,8 @@ public class SimpleWebServer implements Runnable {
     private static final String TAG = SimpleWebServer.class.getSimpleName();
 
     public static final BlockingQueue<ResponseMessage> queue = new LinkedBlockingQueue<>();
+
+    public static boolean enableLogging = false;
 
     /**
      * The port number we listen to
@@ -86,7 +86,8 @@ public class SimpleWebServer implements Runnable {
      * This method starts the web server listening to the specified port.
      */
     public void start() {
-        Log.v(TAG, "[start]");
+        if (enableLogging)
+            Log.v(TAG, "[start]");
         mIsRunning = true;
         new Thread(this).start();
     }
@@ -95,7 +96,8 @@ public class SimpleWebServer implements Runnable {
      * This method stops the web server
      */
     public void stop() {
-        Log.v(TAG, "[stop]");
+        if (enableLogging)
+            Log.v(TAG, "[stop]");
         try {
             mIsRunning = false;
             if (null != mServerSocket) {
@@ -109,13 +111,15 @@ public class SimpleWebServer implements Runnable {
 
     @Override
     public void run() {
-        Log.v(TAG, "[run]");
+        if (enableLogging)
+            Log.v(TAG, "[run]");
 
         try {
             // Logger.v(TAG, "[run] Found free port at: " + port);
 
             mServerSocket = new ServerSocket(mPort);
-            Log.v(TAG, "[run] Listening to port=" + mServerSocket.getLocalPort());
+            if (enableLogging)
+                Log.v(TAG, "[run] Listening to port=" + mServerSocket.getLocalPort());
 
             while (mIsRunning) {
                 Socket socket = mServerSocket.accept();
@@ -191,7 +195,8 @@ public class SimpleWebServer implements Runnable {
                 list.add(queue.poll());
 
             String s = toJson(list);
-            Log.v(TAG, "[response] " + s);
+            if (enableLogging)
+                Log.v(TAG, "[response] " + s);
             return s.getBytes(Charset.forName("UTF-8"));
 
         } else
@@ -269,7 +274,8 @@ public class SimpleWebServer implements Runnable {
     public static void closeSilently(final AutoCloseable closeable) {
         try {
             if (null != closeable) {
-                Log.v(TAG, "[closeSilently] " + closeable.getClass().getSimpleName());
+                if (enableLogging)
+                    Log.v(TAG, "[closeSilently] " + closeable.getClass().getSimpleName());
                 closeable.close();
             }
         } catch (final Exception ignore) {

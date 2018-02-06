@@ -276,8 +276,6 @@ public class SimpleWebServer implements Runnable {
     public static void closeSilently(final AutoCloseable closeable) {
         try {
             if (null != closeable) {
-                if (enableLogging)
-                    Log.v(TAG, "[closeSilently] " + closeable.getClass().getSimpleName());
                 closeable.close();
             }
         } catch (final Exception ignore) {

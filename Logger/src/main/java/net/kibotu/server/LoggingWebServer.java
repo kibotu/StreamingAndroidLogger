@@ -39,6 +39,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.text.TextUtils.isEmpty;
+import static net.kibotu.server.LoggerUtils.getIpAddressLog;
 import static net.kibotu.server.LoggingWebServer2.toJson;
 
 
@@ -86,8 +87,11 @@ public class LoggingWebServer implements Runnable {
      * This method starts the web server listening to the specified port.
      */
     public void start() {
-        if (enableLogging)
-            Log.v(TAG, "[start]");
+        if (mIsRunning)
+            return;
+
+        Log.i(TAG, getIpAddressLog(8080));
+
         mIsRunning = true;
         new Thread(this).start();
     }

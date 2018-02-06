@@ -9,9 +9,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.Logger
-import net.kibotu.server.LoggingWebServer2.Companion.getAddressLog
 import net.kibotu.server.ResponseMessage
 import net.kibotu.server.LoggingWebServer
+import net.kibotu.server.getIpAddressLog
 import java.util.concurrent.TimeUnit
 
 /**
@@ -45,11 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         loggingWebServer = LoggingWebServer(8080, assets)
         Logger.snackbar("Start.")
-        Logger.v(TAG, getAddressLog(8080))
+        Logger.v(TAG, getIpAddressLog(8080))
         loggingWebServer?.start()
 
         content.movementMethod = LinkMovementMethod.getInstance()
-        content.text = getAddressLog(8080)
+        content.text = getIpAddressLog(8080)
     }
 
     override fun onDestroy() {

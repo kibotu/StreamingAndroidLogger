@@ -127,7 +127,8 @@ public class SimpleWebServer implements Runnable {
                 closeSilently(socket);
             }
         } catch (IOException e) {
-            Log.v(TAG, "" + e.getMessage());
+            if (enableLogging)
+                Log.v(TAG, "" + e.getMessage());
         }
     }
 
@@ -164,7 +165,8 @@ public class SimpleWebServer implements Runnable {
 
             Uri uri = parseUri(pathAndParams);
 
-            Log.v(TAG, "[request] " + uri);
+            if (enableLogging)
+                Log.v(TAG, "[request] " + uri);
 
             byte[] bytes = createResponse(pathAndParams);
             if (null == bytes) {

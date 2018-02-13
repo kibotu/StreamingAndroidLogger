@@ -25,19 +25,19 @@ class LogcatLogger : ILogger {
     }
 
     override fun verbose(tag: String, message: String) {
-        Log.d(tag, message)
+        Log.v(tag, message)
     }
 
     override fun information(tag: String, message: String) {
-        Log.d(tag, message)
+        Log.i(tag, message)
     }
 
     override fun warning(tag: String, message: String) {
-        Log.d(tag, message)
+        Log.w(tag, message)
     }
 
     override fun error(tag: String, message: String) {
-        Log.d(tag, message)
+        Log.e(tag, message)
     }
 
     override fun exception(throwable: Throwable) {

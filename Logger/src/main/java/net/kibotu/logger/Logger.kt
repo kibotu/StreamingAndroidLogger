@@ -235,17 +235,21 @@ object Logger {
         return collection == null || collection.isEmpty()
     }
 
+    @JvmStatic
     fun Any?.log() {
         this?.log(this.toString())
     }
 
+    @JvmStatic
     fun Any.log(message: Any?) = Logger.v((this as? LogTag)?.tag()
             ?: this.javaClass.simpleName, "$message")
 
+    @JvmStatic
     fun invoker(): String {
         return Throwable().stackTrace[2].toString()
     }
 
+    @JvmStatic
     fun printInvoker() {
         Throwable().stackTrace[2].toString().log()
     }

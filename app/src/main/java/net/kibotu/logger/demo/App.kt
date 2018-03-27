@@ -21,6 +21,16 @@ class App : MultiDexApplication() {
             Logger.Level.VERBOSE
         else
             Logger.Level.SILENT)
+
+        invokerMethod()
+    }
+
+    fun invokerMethod(){
+        invokeMe()
+    }
+
+    private fun invokeMe() {
+        Logger.v("hallo", Logger.invoker())
     }
 
     override fun onTerminate() {

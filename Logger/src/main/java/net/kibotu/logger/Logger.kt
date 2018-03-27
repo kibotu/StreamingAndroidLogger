@@ -241,4 +241,12 @@ object Logger {
 
     fun Any.log(message: Any?) = Logger.v((this as? LogTag)?.tag()
             ?: this.javaClass.simpleName, "$message")
+
+    fun invoker(): String {
+        return Throwable().stackTrace[2].toString()
+    }
+
+    fun printInvoker() {
+        Throwable().stackTrace[2].toString().log()
+    }
 }

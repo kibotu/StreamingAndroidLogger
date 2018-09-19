@@ -96,7 +96,7 @@ object Logger {
     private fun allowLogging(level: Level): Boolean {
         if (isEmpty(loggers))
             addLogger(LogcatLogger(), Level.VERBOSE)
-        return logLevel.compareTo(level) <= 0
+        return logLevel <= level
     }
 
     @JvmStatic

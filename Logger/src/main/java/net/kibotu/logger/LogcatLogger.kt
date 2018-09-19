@@ -2,7 +2,6 @@ package net.kibotu.logger
 
 import android.os.Handler
 import android.os.Looper
-import android.support.design.widget.Snackbar
 import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.util.TypedValue
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import net.kibotu.ContextHelper.getActivity
 import net.kibotu.ContextHelper.getContext
 
@@ -73,7 +73,7 @@ class LogcatLogger : ILogger {
                 return@post
             }
             val snackbar = Snackbar.make(contentRoot, message, Snackbar.LENGTH_SHORT)
-            val text: TextView = snackbar.view.findViewById(android.support.design.R.id.snackbar_text)
+            val text: TextView = snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text)
             text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             snackbar.show()
         }

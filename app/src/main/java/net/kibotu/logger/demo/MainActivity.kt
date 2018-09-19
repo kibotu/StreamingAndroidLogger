@@ -1,16 +1,16 @@
 package net.kibotu.logger.demo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
+import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.Logger
-import net.kibotu.server.ResponseMessage
 import net.kibotu.server.LoggingWebServer
+import net.kibotu.server.ResponseMessage
 import net.kibotu.server.getIpAddressLog
 import java.util.concurrent.TimeUnit
 

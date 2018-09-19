@@ -7,23 +7,23 @@ package net.kibotu.logger
 class SystemLogger : ILogger {
 
     override fun debug(tag: String, message: String) {
-        System.out.println(tag + " " + message)
+        System.out.println("$tag $message")
     }
 
     override fun verbose(tag: String, message: String) {
-        System.out.println(tag + " " + message)
+        System.out.println("$tag $message")
     }
 
     override fun information(tag: String, message: String) {
-        System.out.println(tag + " " + message)
+        System.out.println("$tag $message")
     }
 
     override fun warning(tag: String, message: String) {
-        System.out.println(tag + " " + message)
+        System.out.println("$tag $message")
     }
 
     override fun error(tag: String, message: String) {
-        System.err.println(tag + " " + message)
+        System.err.println("$tag $message")
     }
 
     override fun exception(throwable: Throwable) {

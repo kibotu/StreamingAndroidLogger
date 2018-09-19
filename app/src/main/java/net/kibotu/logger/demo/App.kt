@@ -1,6 +1,6 @@
 package net.kibotu.logger.demo
 
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 
 import net.kibotu.logger.LogcatLogger
 import net.kibotu.logger.Logger
@@ -25,7 +25,7 @@ class App : MultiDexApplication() {
         invokerMethod()
     }
 
-    fun invokerMethod(){
+    fun invokerMethod() {
         invokeMe()
     }
 

@@ -1,11 +1,10 @@
 buildscript {
 
-    ext.compileSdkVer = 27
-    ext.buildToolsVer = '27.0.3'
+    ext.compileSdkVer = 28
+    ext.buildToolsVer = '28.0.2'
     ext.minSdkVer = 15
-    ext.targetSdkVer = 27
-    ext.kotlin_version = '1.2.31'
-    ext.supportVers = '27.1.0'
+    ext.targetSdkVer = 28
+    ext.kotlin_version = '1.2.70'
 
     repositories {
         google()
@@ -13,9 +12,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -30,8 +29,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
 }

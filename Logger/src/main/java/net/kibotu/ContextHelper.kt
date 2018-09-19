@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 
 import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicBoolean
@@ -45,6 +45,7 @@ object ContextHelper {
 
         ContextHelper.context = WeakReference(context)
     }
+
 
     @JvmStatic
     fun getApplication(): Application? = application?.get() as Application

@@ -1,9 +1,6 @@
-package de.charite.balsam.base
+package net.kibotu.base
 
-import net.kibotu.base.BaseTest
 import net.kibotu.base.GsonProvider.gson
-import net.kibotu.base.assertEqualJson
-import net.kibotu.base.toJsonPrettyPrinting
 import org.junit.Assert
 import org.junit.Test
 

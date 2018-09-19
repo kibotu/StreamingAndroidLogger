@@ -1,4 +1,4 @@
-package de.charite.balsam.base
+package net.kibotu.base
 
 import org.junit.Test
 

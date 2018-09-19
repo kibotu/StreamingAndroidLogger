@@ -17,14 +17,11 @@
 package net.kibotu.server
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.AssetManager
 import android.net.Uri
-import android.net.wifi.WifiManager
 import android.text.TextUtils.isEmpty
 import android.util.Log
 import com.google.gson.GsonBuilder
-import net.kibotu.ContextHelper.getApplication
 import net.kibotu.logger.Logger
 import java.io.*
 import java.net.ServerSocket

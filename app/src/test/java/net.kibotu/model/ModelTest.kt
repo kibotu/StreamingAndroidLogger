@@ -1,6 +1,6 @@
 package net.kibotu.model
 
-import de.charite.balsam.base.SerializableTests
+import net.kibotu.base.SerializableTests
 
 data class TestModel(var message: String? = null)
 

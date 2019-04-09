@@ -21,8 +21,8 @@ Convenient logger that adds support to having multiple different loggers and dif
 
 1) Add a Logger
 
-    Logger.addLogger(LogcatLogger(), Level.VERBOSE)
-    Logger.addLogger(SystemLogger(), Level.VERBOSE)
+     Logger.addLogger(LogcatLogger(), Level.VERBOSE)
+     Logger.addLogger(SystemLogger(), Level.VERBOSE)
 
 2) Log with different log levels:
 

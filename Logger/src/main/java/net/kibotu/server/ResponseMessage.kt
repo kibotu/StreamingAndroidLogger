@@ -9,7 +9,7 @@ import java.util.*
  */
 data class ResponseMessage(val message: String?) {
 
-    val time: String?
+    private val time: String?
 
     init {
         time = dateFormat.format(Date())

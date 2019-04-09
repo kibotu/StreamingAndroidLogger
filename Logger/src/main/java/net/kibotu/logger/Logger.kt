@@ -2,7 +2,7 @@ package net.kibotu.logger
 
 import android.app.Application
 import net.kibotu.ContextHelper
-import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 
 /**
@@ -18,18 +18,22 @@ object Logger {
     /**
      * Logging level.
      */
-    private var logLevel = Level.DEBUG
+    var level: Level = Level.VERBOSE
+        set(value) {
+            val list = loggers.map { it.copy(second = value) }
+            loggers.clear()
+            loggers.addAll(list)
+            field = value
+        }
+
     /**
      * Concrete Logger.
      */
-    private val loggers = ArrayList<ILogger>()
-
-    private var TAG = Logger::class.java.simpleName
+    private var loggers = CopyOnWriteArrayList<Pair<ILogger, Level>>()
 
     @JvmStatic
     fun with(context: Application) {
         ContextHelper.with(context)
-        setDefaultTag(tag = context.javaClass.simpleName)
     }
 
     @JvmStatic
@@ -37,72 +41,13 @@ object Logger {
         ContextHelper.onTerminate()
     }
 
-    @JvmStatic
-    fun setDefaultTag(tag: String) {
-        TAG = tag
-    }
-
     /**
      * Constructor.
      *
      * @param logger - Concrete Logger.
      */
     @JvmStatic
-    fun addLogger(logger: ILogger) {
-        loggers.add(logger)
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param logger - Concrete Logger.
-     * @param level  - Logging level.
-     */
-    @JvmStatic
-    fun addLogger(logger: ILogger, level: Level) {
-        addLogger(logger)
-        logLevel = level
-    }
-
-    /**
-     * Gets Logging level.
-     *
-     * @return Currently set logging level.
-     */
-    @JvmStatic
-    fun getLogLevel(): Level {
-        return logLevel
-    }
-
-    /**
-     * Sets new Logging level.
-     *
-     * @param logLevel new logging level.
-     */
-    @JvmStatic
-    fun setLogLevel(logLevel: Level) {
-        if (isEmpty(loggers))
-            addLogger(LogcatLogger())
-        else
-            Logger.logLevel = logLevel
-    }
-
-    /**
-     * Checks against logging level.
-     *
-     * @param level - Defined logging level.
-     * @return true if logging is allowed.
-     */
-    private fun allowLogging(level: Level): Boolean {
-        if (isEmpty(loggers))
-            addLogger(LogcatLogger(), Level.VERBOSE)
-        return logLevel <= level
-    }
-
-    @JvmStatic
-    fun allowLogging(): Boolean {
-        return allowLogging(logLevel)
-    }
+    fun addLogger(logger: ILogger, level: Level = Level.VERBOSE) = loggers.add(Pair(logger, level))
 
     /**
      * Representing Verbose-Logging level.
@@ -111,9 +56,10 @@ object Logger {
      */
     @JvmStatic
     fun v(tag: String, message: String?) {
-        if (allowLogging(Level.VERBOSE))
-            for (logger in loggers)
-                logger.verbose(tag, "" + message!!)
+        loggers.forEach {
+            if (it.second <= Level.VERBOSE)
+                it.first.verbose(tag, "$message")
+        }
     }
 
     /**
@@ -123,8 +69,10 @@ object Logger {
      */
     @JvmStatic
     fun d(tag: String, message: String?) {
-        if (allowLogging(Level.DEBUG))
-            for (logger in loggers) logger.debug(tag, "" + message!!)
+        loggers.forEach {
+            if (it.second <= Level.DEBUG)
+                it.first.debug(tag, "$message")
+        }
     }
 
     /**
@@ -134,9 +82,10 @@ object Logger {
      */
     @JvmStatic
     fun i(tag: String, message: String?) {
-        if (allowLogging(Level.INFO))
-            for (logger in loggers)
-                logger.information(tag, "" + message!!)
+        loggers.forEach {
+            if (it.second <= Level.INFO)
+                it.first.information(tag, "$message")
+        }
     }
 
     /**
@@ -146,9 +95,10 @@ object Logger {
      */
     @JvmStatic
     fun w(tag: String, message: String?) {
-        if (allowLogging(Level.WARNING))
-            for (logger in loggers)
-                logger.warning(tag, "" + message!!)
+        loggers.forEach {
+            if (it.second <= Level.WARNING)
+                it.first.warning(tag, "$message")
+        }
     }
 
     /**
@@ -158,20 +108,10 @@ object Logger {
      */
     @JvmStatic
     fun e(tag: String, message: String?) {
-        if (allowLogging(Level.ERROR))
-            for (logger in loggers)
-                logger.error(tag, "" + message!!)
-    }
-
-    /**
-     * Representing Error logging of throwable.
-     *
-     * @param throwable - Actual throwable.
-     */
-    @JvmStatic
-    fun printStackTrace(throwable: Throwable?) {
-        if (throwable == null) return
-        if (allowLogging(Level.ERROR)) throwable.printStackTrace()
+        loggers.forEach {
+            if (it.second <= Level.ERROR)
+                it.first.error(tag, "$message")
+        }
     }
 
     @JvmStatic
@@ -199,60 +139,50 @@ object Logger {
     }
 
     @JvmStatic
+    fun Any.logv(message: String?) = Logger.v(TAG, message)
+
+    @JvmStatic
+    fun Any.logd(message: String?) = Logger.d(TAG, message)
+
+    @JvmStatic
+    fun Any.logi(message: String?) = Logger.i(TAG, message)
+
+    @JvmStatic
+    fun Any.logw(message: String?) = Logger.w(TAG, message)
+
+    @JvmStatic
+    fun Any.loge(message: String?) = Logger.e(TAG, message)
+
+    @JvmStatic
     fun e(throwable: Throwable?) {
-        if (allowLogging(Level.ERROR) && throwable != null)
-            for (logger in loggers)
-                logger.exception(throwable)
+        loggers.forEach {
+            if (it.second <= Level.ERROR)
+                it.first.exception(throwable ?: return)
+        }
     }
 
     @JvmStatic
     fun toast(message: String?) {
-        if (allowLogging(Level.INFO))
-            for (logger in loggers)
-                logger.toast(message!!)
+        loggers.forEach {
+            if (it.second <= Level.ERROR)
+                it.first.toast("$message")
+        }
     }
 
     @JvmStatic
     fun snackbar(message: String?) {
-        if (allowLogging(Level.INFO))
-            for (logger in loggers)
-                logger.snackbar(message!!)
-    }
-
-    /**
-     * Represents the logging levels.
-     */
-    enum class Level private constructor(val TAG: String) {
-        VERBOSE("V"),
-        DEBUG("D"),
-        INFO("I"),
-        WARNING("W"),
-        ERROR("E"),
-        SILENT("")
-    }
-
-    private fun isEmpty(collection: Collection<*>?): Boolean {
-        return collection == null || collection.isEmpty()
+        loggers.forEach {
+            if (it.second <= Level.INFO)
+                it.first.snackbar("$message")
+        }
     }
 
     @JvmStatic
-    fun Any?.log() {
-        this?.log(this.toString())
-    }
+    inline infix fun Any.paul(message: String?) = logv("!!!PAUL!!!! $message !!!!")
 
     @JvmStatic
-    fun Any.log(message: Any?) = Logger.v(
-        (this as? LogTag)?.tag()
-            ?: this.javaClass.simpleName, "$message"
-    )
+    fun invoker(): String = Throwable().stackTrace[2].toString()
 
     @JvmStatic
-    fun invoker(): String {
-        return Throwable().stackTrace[2].toString()
-    }
-
-    @JvmStatic
-    fun printInvoker() {
-        Throwable().stackTrace[2].toString().log()
-    }
+    fun printInvoker(): Unit = logv(Throwable().stackTrace[2].toString())
 }

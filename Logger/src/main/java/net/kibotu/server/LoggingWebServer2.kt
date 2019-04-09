@@ -135,7 +135,7 @@ internal class LoggingWebServer2(
 
             // Prepare the content to send.
             if (isEmpty(pathAndParams)) {
-                pathAndParams = "index.html"
+                pathAndParams = "StreamingLogger/index.html"
             }
 
             val uri = parseUri(pathAndParams!!)

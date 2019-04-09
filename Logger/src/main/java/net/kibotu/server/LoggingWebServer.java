@@ -32,7 +32,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static android.text.TextUtils.isEmpty;
-import static net.kibotu.server.LoggerUtils.getIpAddressLog;
+import static net.kibotu.server.LoggerUtils.openBrowserMessage;
 import static net.kibotu.server.LoggingWebServer2.toJson;
 
 
@@ -48,44 +48,46 @@ public class LoggingWebServer implements Runnable {
 
     public static boolean enableLogging = false;
 
+    private static final String htmlFolder = "StreamingLogger";
+
     /**
      * The port number we listen to
      */
-    private final int mPort;
+    private final int port;
 
     /**
      * {@link AssetManager} for loading files to serve.
      */
-    private final AssetManager mAssets;
+    private final AssetManager assetManager;
 
     /**
      * True if the server is running.
      */
-    private boolean mIsRunning;
+    private boolean isRunning;
 
     /**
      * The {@link ServerSocket} that we listen to.
      */
-    private ServerSocket mServerSocket;
+    private ServerSocket serverSocket;
 
     /**
      * WebServer constructor.
      */
     public LoggingWebServer(int port, AssetManager assets) {
-        mPort = port;
-        mAssets = assets;
+        this.port = port;
+        assetManager = assets;
     }
 
     /**
      * This method starts the web server listening to the specified port.
      */
     public void start() {
-        if (mIsRunning)
+        if (isRunning)
             return;
 
-        Log.i(TAG, getIpAddressLog(8080));
+        Log.i(TAG, openBrowserMessage(8080));
 
-        mIsRunning = true;
+        isRunning = true;
         new Thread(this).start();
     }
 
@@ -96,10 +98,10 @@ public class LoggingWebServer implements Runnable {
         if (enableLogging)
             Log.v(TAG, "[stop]");
         try {
-            mIsRunning = false;
-            if (null != mServerSocket) {
-                mServerSocket.close();
-                mServerSocket = null;
+            isRunning = false;
+            if (null != serverSocket) {
+                serverSocket.close();
+                serverSocket = null;
             }
         } catch (IOException e) {
             Log.e(TAG, "Error closing the server socket.", e);
@@ -114,12 +116,12 @@ public class LoggingWebServer implements Runnable {
         try {
             // Logger.v(TAG, "[run] Found free port at: " + port);
 
-            mServerSocket = new ServerSocket(mPort);
+            serverSocket = new ServerSocket(port);
             if (enableLogging)
-                Log.v(TAG, "[run] Listening to port=" + mServerSocket.getLocalPort());
+                Log.v(TAG, "[run] Listening to port=" + serverSocket.getLocalPort());
 
-            while (mIsRunning) {
-                Socket socket = mServerSocket.accept();
+            while (isRunning) {
+                Socket socket = serverSocket.accept();
                 handle(socket);
                 closeSilently(socket);
             }
@@ -223,7 +225,7 @@ public class LoggingWebServer implements Runnable {
         InputStream input = null;
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            input = mAssets.open(fileName);
+            input = assetManager.open(htmlFolder + "/" + fileName);
             byte[] buffer = new byte[1024];
             int size;
             while (-1 != (size = input.read(buffer))) {
@@ -232,6 +234,7 @@ public class LoggingWebServer implements Runnable {
             output.flush();
             return output.toByteArray();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             return null;
         } finally {
             closeSilently(input);

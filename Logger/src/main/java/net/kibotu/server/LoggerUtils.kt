@@ -5,21 +5,25 @@
 
 package net.kibotu.server
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.wifi.WifiManager
 import net.kibotu.ContextHelper
 
-@SuppressLint("WifiManagerLeak")
-fun getIpAddressLog(port: Int): String {
-    val wifiManager = ContextHelper.getApplication()?.getSystemService(Context.WIFI_SERVICE) as? WifiManager
-    val ipAddress = wifiManager?.connectionInfo?.ipAddress ?: 0
-    @SuppressLint("DefaultLocale") val formattedIpAddress = String.format(
-        "%d.%d.%d.%d",
-        ipAddress and 0xff,
-        ipAddress shr 8 and 0xff,
-        ipAddress shr 16 and 0xff,
-        ipAddress shr 24 and 0xff
-    )
-    return "Open http://$formattedIpAddress:$port in your browser. If website can't be found: make sure device and pc are on the same network segment."
-}
+fun openBrowserMessage(port: Int) = "Open http://$formattedIpAddress:$port in your browser. If website can't be found: make sure device and pc are on the same network segment."
+
+val ipAddress
+    get() = (ContextHelper.getApplication()?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as? WifiManager)
+        ?.connectionInfo
+        ?.ipAddress
+        ?: 0
+
+val formattedIpAddress
+    get() = with(ipAddress) {
+        String.format(
+            "%d.%d.%d.%d",
+            this and 0xff,
+            this shr 8 and 0xff,
+            this shr 16 and 0xff,
+            this shr 24 and 0xff
+        )
+    }

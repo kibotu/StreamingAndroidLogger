@@ -9,9 +9,10 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.Logger
+import net.kibotu.logger.Logger.logv
 import net.kibotu.server.LoggingWebServer
 import net.kibotu.server.ResponseMessage
-import net.kibotu.server.getIpAddressLog
+import net.kibotu.server.openBrowserMessage
 import java.util.concurrent.TimeUnit
 
 /**
@@ -19,8 +20,6 @@ import java.util.concurrent.TimeUnit
  */
 
 class MainActivity : AppCompatActivity() {
-
-    private var TAG: String = javaClass.simpleName
 
     private var subscribe: Disposable? = null
 
@@ -32,24 +31,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         subscribe = Observable.fromCallable { "keks #" + ++i }.repeatWhen { o -> o.concatMap { Observable.timer(1000, TimeUnit.MILLISECONDS) } }
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ msg ->
+            .subscribe({
 
-                LoggingWebServer.queue.add(ResponseMessage(msg))
+                logv("${ResponseMessage(it)}")
 
             }, { it.printStackTrace() })
 
-
         loggingWebServer = LoggingWebServer(8080, assets)
         Logger.snackbar("Start.")
-        Logger.v(TAG, getIpAddressLog(8080))
+        val openBrowserMessage = openBrowserMessage(8080)
+        logv(openBrowserMessage)
         loggingWebServer?.start()
 
         content.movementMethod = LinkMovementMethod.getInstance()
-        content.text = getIpAddressLog(8080)
+        content.text = openBrowserMessage
     }
 
     override fun onDestroy() {

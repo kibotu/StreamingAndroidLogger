@@ -1,9 +1,16 @@
 package net.kibotu.logger.demo
 
 import androidx.multidex.MultiDexApplication
+import net.kibotu.logger.Level
 
 import net.kibotu.logger.LogcatLogger
 import net.kibotu.logger.Logger
+import net.kibotu.logger.Logger.logd
+import net.kibotu.logger.Logger.loge
+import net.kibotu.logger.Logger.logi
+import net.kibotu.logger.Logger.logv
+import net.kibotu.logger.Logger.logw
+import net.kibotu.logger.WebLogger
 
 
 /**
@@ -17,14 +24,17 @@ class App : MultiDexApplication() {
 
         Logger.with(this)
 
-        Logger.addLogger(
-            LogcatLogger(), if (BuildConfig.DEBUG)
-                Logger.Level.VERBOSE
-            else
-                Logger.Level.SILENT
-        )
+        Logger.addLogger(LogcatLogger(), Level.VERBOSE)
+
+        Logger.addLogger(WebLogger(), Level.SILENT)
 
         invokerMethod()
+
+        logv("verbose message")
+        logd("debug message")
+        logi("info message")
+        logw("warning message")
+        loge("error message")
     }
 
     fun invokerMethod() {

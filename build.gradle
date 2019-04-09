@@ -1,29 +1,33 @@
 buildscript {
 
-    ext.compileSdkVer = 28
-    ext.buildToolsVer = '28.0.2'
-    ext.minSdkVer = 15
-    ext.targetSdkVer = 28
-    ext.kotlin_version = '1.2.70'
+    apply from: "${project.rootDir}/Android-Dependencies/dependencies.gradle"
 
     repositories {
         google()
-        jcenter()
-        mavenCentral()
+        // https://storage-download.googleapis.com/maven-central/index.html
+        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath plugin.gradleBuildToolsCanary
+        classpath plugin.kotlinGradle
+        classpath plugin.kotlinApt
+        classpath pluginLibrary.mavenGradle
+        classpath plugin.dexcountGradle
     }
 }
 
 allprojects {
+
+    apply from: "${project.rootDir}/Android-Dependencies/utils.gradle"
+
     repositories {
         google()
-        jcenter()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        // https://storage-download.googleapis.com/maven-central/index.html
+        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://jitpack.io' }
     }
 }
 

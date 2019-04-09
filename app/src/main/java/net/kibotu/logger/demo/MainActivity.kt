@@ -34,13 +34,13 @@ class MainActivity : AppCompatActivity() {
 
 
         subscribe = Observable.fromCallable { "keks #" + ++i }.repeatWhen { o -> o.concatMap { Observable.timer(1000, TimeUnit.MILLISECONDS) } }
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ msg ->
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ msg ->
 
-                    LoggingWebServer.queue.add(ResponseMessage(msg))
+                LoggingWebServer.queue.add(ResponseMessage(msg))
 
-                }, { it.printStackTrace() })
+            }, { it.printStackTrace() })
 
 
         loggingWebServer = LoggingWebServer(8080, assets)

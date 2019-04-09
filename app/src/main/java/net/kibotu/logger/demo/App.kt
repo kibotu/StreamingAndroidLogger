@@ -17,10 +17,12 @@ class App : MultiDexApplication() {
 
         Logger.with(this)
 
-        Logger.addLogger(LogcatLogger(), if (BuildConfig.DEBUG)
-            Logger.Level.VERBOSE
-        else
-            Logger.Level.SILENT)
+        Logger.addLogger(
+            LogcatLogger(), if (BuildConfig.DEBUG)
+                Logger.Level.VERBOSE
+            else
+                Logger.Level.SILENT
+        )
 
         invokerMethod()
     }

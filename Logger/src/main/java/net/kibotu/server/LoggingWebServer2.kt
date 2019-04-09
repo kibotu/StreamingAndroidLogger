@@ -38,14 +38,14 @@ import java.util.concurrent.LinkedBlockingQueue
  * server handles one request at a time. It only supports GET method.
  */
 internal class LoggingWebServer2(
-        /**
-         * The port number we listen to
-         */
-        private val port: Int,
-        /**
-         * [AssetManager] for loading files to serve.
-         */
-        private val assets: AssetManager
+    /**
+     * The port number we listen to
+     */
+    private val port: Int,
+    /**
+     * [AssetManager] for loading files to serve.
+     */
+    private val assets: AssetManager
 ) : Runnable {
 
     /**

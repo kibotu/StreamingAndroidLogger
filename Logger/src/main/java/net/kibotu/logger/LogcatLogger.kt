@@ -81,8 +81,8 @@ class LogcatLogger : ILogger {
 
     private fun getContentRoot(): View? {
         return getActivity()
-                ?.window
-                ?.decorView
-                ?.findViewById(android.R.id.content)
+            ?.window
+            ?.decorView
+            ?.findViewById(android.R.id.content)
     }
 }

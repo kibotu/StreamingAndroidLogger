@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
 
@@ -13,7 +15,9 @@ android {
         targetSdkVersion targetSdkVer
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
     buildTypes {
@@ -23,35 +27,69 @@ android {
         }
     }
 
+    // region java compiler flags
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // region test options
+    // endregion
 
-    testOptions {
-        unitTests.all {
-            jvmArgs '-noverify'
-            testLogging {
-                events "passed", "skipped", "failed", "standardOut", "standardError"
-                outputs.upToDateWhen { false }
-                showStandardStreams = true
-            }
-        }
-        unitTests.returnDefaultValues = true
-        unitTests.includeAndroidResources = true
+    // region lint options
+
+    lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false        // true by default
+        checkAllWarnings false
+        checkReleaseBuilds false
+        ignoreWarnings true       // false by default
+        quiet true                // false by default
+    }
+
+    // endregion
+
+    // region dex options
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        maxProcessCount 8
+    }
+
+    // endregion
+
+    // region adb options
+
+    adbOptions {
+        timeOutInMs 10 * 60 * 1000 // 10 minutes
     }
 
     // endregion
 }
 
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.0.0-rc02"
-    implementation "com.google.android.material:material:1.0.0-rc02"
-    implementation "com.google.code.gson:gson:2.8.5"
+    implementation libs.kotlinJdk8
+    implementation libs.supportDesign
+    implementation libs.supportAppCompat
+    implementation libs.appCompatResources
+    implementation libs.supportAnnotations
+    implementation libs.androidKtx
+    implementation libs.gson
+
+    implementation libs.applicationProvider
 }
 
-apply from: 'https://gist.githubusercontent.com/kibotu/994c9cc65fe623b76b76fedfac74b34b/raw/65ee52482ba65050e015f4b00d8d2fc9172a10e8/javadoc.gradle'
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
+
+    resolutionStrategy.force libs.kotlinJdk8
+    resolutionStrategy.force libs.supportDesign
+    resolutionStrategy.force libs.supportAppCompat
+    resolutionStrategy.force libs.appCompatResources
+    resolutionStrategy.force libs.supportAnnotations
+    resolutionStrategy.force libs.androidKtx
+    resolutionStrategy.force libs.gson
+}
+
+apply from: "${project.rootDir}/Android-Dependencies/javadoc.gradle"

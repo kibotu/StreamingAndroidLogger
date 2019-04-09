@@ -10,13 +10,13 @@ import org.junit.Assert
 object GsonProvider {
 
     val gson = GsonBuilder()
-            .disableHtmlEscaping()
-            .create()
+        .disableHtmlEscaping()
+        .create()
 
     val gsonPrettyPrinting = GsonBuilder()
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .create()
+        .disableHtmlEscaping()
+        .setPrettyPrinting()
+        .create()
 
     val jsonParser = JsonParser()
 }

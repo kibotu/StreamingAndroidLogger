@@ -241,8 +241,10 @@ object Logger {
     }
 
     @JvmStatic
-    fun Any.log(message: Any?) = Logger.v((this as? LogTag)?.tag()
-            ?: this.javaClass.simpleName, "$message")
+    fun Any.log(message: Any?) = Logger.v(
+        (this as? LogTag)?.tag()
+            ?: this.javaClass.simpleName, "$message"
+    )
 
     @JvmStatic
     fun invoker(): String {

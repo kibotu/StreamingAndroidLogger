@@ -1,6 +1,7 @@
 package net.kibotu.logger
 
 import android.app.Application
+import net.kibotu.ContextHelper
 import java.util.concurrent.CopyOnWriteArrayList
 
 

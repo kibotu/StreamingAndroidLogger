@@ -31,11 +31,13 @@ object Logger {
      */
     private var loggers = CopyOnWriteArrayList<Pair<ILogger, Level>>()
 
+    @Deprecated("no longer required", ReplaceWith(""))
     @JvmStatic
     fun with(context: Application) {
         ContextHelper.with(context)
     }
 
+    @Deprecated("no longer required", ReplaceWith(""))
     @JvmStatic
     fun onTerminate() {
         ContextHelper.onTerminate()

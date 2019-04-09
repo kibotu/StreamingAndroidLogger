@@ -3,24 +3,24 @@ package net.kibotu.logger.demo
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.appcompat.app.AppCompatActivity
+import com.exozet.android.core.extensions.openExternally
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import net.kibotu.logger.Level
-import net.kibotu.logger.LogcatLogger
-import net.kibotu.logger.Logger
+import net.kibotu.logger.*
 import net.kibotu.logger.Logger.logd
 import net.kibotu.logger.Logger.loge
 import net.kibotu.logger.Logger.logi
 import net.kibotu.logger.Logger.logv
 import net.kibotu.logger.Logger.logw
-import net.kibotu.logger.WebLogger
 import net.kibotu.server.LoggingWebServer
 import net.kibotu.server.ResponseMessage
+import net.kibotu.server.formattedIpAddress
 import net.kibotu.server.openBrowserMessage
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Created by [Jan Rabe](https://about.me/janrabe).
@@ -28,9 +28,11 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
-    private var subscribe: Disposable? = null
+    private var subscribtion = CompositeDisposable()
 
-    private var i = 0
+    private var count = AtomicInteger(0)
+
+    private val port = 8080
 
     private var loggingWebServer: LoggingWebServer? = null
 
@@ -41,37 +43,58 @@ class MainActivity : AppCompatActivity() {
         Logger.addLogger(LogcatLogger(), Level.VERBOSE)
         Logger.addLogger(WebLogger(), Level.VERBOSE)
 
-        invokerMethod()
+        testInvokerMethod()
+        testLogLevels()
 
+        startServerAndLogInterval()
+
+        val openBrowserMessage = openBrowserMessage(port)
+        logv(openBrowserMessage)
+
+        snack(openBrowserMessage, "Open in Browser") {
+            "http://$formattedIpAddress:$port".openExternally()
+        }
+
+        content.movementMethod = LinkMovementMethod.getInstance()
+        content.text = openBrowserMessage
+    }
+
+    private fun testInvokerMethod() {
+        invokerMethod()
+    }
+
+    private fun testLogLevels() {
         logv("verbose message")
         logd("debug message")
         logi("info message")
         logw("warning message")
         loge("error message")
+    }
 
-        subscribe = Observable.fromCallable { "keks #" + ++i }.repeatWhen { o -> o.concatMap { Observable.timer(1000, TimeUnit.MILLISECONDS) } }
+    private fun startServerAndLogInterval() {
+        if (!subscribtion.isDisposed)
+            subscribtion.dispose()
+
+        subscribtion = CompositeDisposable()
+        subscribtion.add(Observable.fromCallable { "keks #${count.incrementAndGet()}" }.repeatWhen { o -> o.concatMap { Observable.timer(1000, TimeUnit.MILLISECONDS) } }
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
 
                 logv("${ResponseMessage(it)}")
 
-            }, { it.printStackTrace() })
+            }, { it.printStackTrace() }))
 
-        loggingWebServer = LoggingWebServer(8080, assets)
-        Logger.snackbar("Start.")
-        val openBrowserMessage = openBrowserMessage(8080)
-        logv(openBrowserMessage)
+        loggingWebServer = LoggingWebServer(port, assets)
         loggingWebServer?.start()
-
-        content.movementMethod = LinkMovementMethod.getInstance()
-        content.text = openBrowserMessage
     }
 
     override fun onDestroy() {
         super.onDestroy()
         loggingWebServer?.stop()
-        subscribe?.dispose()
+
+        if (!subscribtion.isDisposed)
+            subscribtion.dispose()
     }
 
     fun invokerMethod() {
@@ -79,6 +102,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun invokeMe() {
-        Logger.v("hallo", Logger.invoker())
+        logv(Logger.invoker())
     }
 }

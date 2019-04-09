@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Adds support to multiple different loggers. Handling different log levels.
+Convenient logger that adds support to having multiple different loggers and different log levels for each one of them.
 
 ## How to install
 
@@ -19,26 +19,25 @@ Adds support to multiple different loggers. Handling different log levels.
 
 ## How to use
 
-1) Init Logger to Application#onCreate and add a Logger
+1) Add a Logger
 
-       @Override
-       public void onCreate() {
-           super.onCreate();
-
-           Logger.with(this);
-           Logger.addLogger(new LogcatLogger(), Logger.Level.DEBUG);
-       }
-
-       @Override
-       public void onTerminate() {
-           super.onTerminate();
-
-           Logger.onTerminate();
-       }
+    Logger.addLogger(LogcatLogger(), Level.VERBOSE)
+    Logger.addLogger(SystemLogger(), Level.VERBOSE)
 
 2) Log with different log levels:
 
-       Logger.v(TAG, "message")
+    logv("verbose message")
+    logd("debug message")
+    logi("info message")
+    logw("warning message")
+    loge("error message")
+
+## Streaming Log Server
+
+      Logger.addLogger(WebLogger(), Level.VERBOSE)
+      var loggingWebServer = LoggingWebServer(port, assets)
+      loggingWebServer.start()
+      loggingWebServer.stop()
 
 ### Log Levels
 

@@ -1,7 +1,6 @@
 package net.kibotu.logger
 
 import android.app.Application
-import net.kibotu.ContextHelper
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -33,9 +32,7 @@ object Logger {
 
     @Deprecated("no longer required", ReplaceWith(""))
     @JvmStatic
-    fun with(context: Application) {
-        ContextHelper.with(context)
-    }
+    fun with(context: Application) = Unit
 
     @Deprecated("no longer required", ReplaceWith(""))
     @JvmStatic

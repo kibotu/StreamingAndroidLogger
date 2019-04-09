@@ -12,7 +12,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "net.kibotu.logger.demo"
-        minSdkVersion 15
+        minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
         versionCode 1
         versionName "1.0"
@@ -98,10 +98,15 @@ dependencies {
     implementation libs.rx2java
     implementation libs.rx2Android
 
+    implementation (libs.exozetCore) {
+        exclude module: 'StreamingAndroidLogger'
+    }
+
+    implementation project(':Logger')
+
     testImplementation testLibs.junit
     testImplementation testLibs.robolectric
 
-    implementation project(':Logger')
 }
 
 // region override support library version

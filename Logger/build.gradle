@@ -76,6 +76,7 @@ dependencies {
     implementation libs.supportAnnotations
     implementation libs.androidKtx
     implementation libs.gson
+    compileOnly(libs.crashlytics) { transitive = true }
 
     api libs.applicationProvider
 }

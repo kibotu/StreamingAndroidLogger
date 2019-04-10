@@ -18,6 +18,7 @@ object Logger {
     /**
      * Logging level.
      */
+    @JvmStatic
     var level: Level = Level.VERBOSE
         set(value) {
             val list = loggers.map { it.copy(second = value) }
@@ -134,6 +135,7 @@ object Logger {
         w(TAG, message)
     }
 
+    @JvmStatic
     fun e(message: String?) {
         e(TAG, message)
     }

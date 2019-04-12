@@ -5,12 +5,6 @@
 
 Convenient logger that adds support to having multiple different loggers and different log levels for each one of them.
 
-### Streaming Log Server
-
-    Logger.addLogger(WebLogger(), Level.VERBOSE)
-    var loggingWebServer = LoggingWebServer(port, assets)
-    loggingWebServer.start()
-    loggingWebServer.stop()
 
 ![demo](demo.gif)
 
@@ -34,6 +28,13 @@ Convenient logger that adds support to having multiple different loggers and dif
     Logger.addLogger(SystemLogger(), Level.VERBOSE)
     Logger.addLogger(CrashlyticsLogger(), Level.VERBOSE)
     Logger.addLogger(WebLogger(), Level.VERBOSE)
+    
+### Streaming Log Server
+
+    Logger.addLogger(WebLogger(), Level.VERBOSE)
+    var loggingWebServer = LoggingWebServer(port, assets)
+    loggingWebServer.start()
+    loggingWebServer.stop()
 
 ### Log with different log levels:
 

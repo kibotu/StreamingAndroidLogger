@@ -5,7 +5,6 @@
 
 Convenient logger that adds support to having multiple different loggers and different log levels for each one of them.
 
-
 ![demo](demo.gif)
 
 ## How to install
@@ -28,7 +27,7 @@ Convenient logger that adds support to having multiple different loggers and dif
     Logger.addLogger(SystemLogger(), Level.VERBOSE)
     Logger.addLogger(CrashlyticsLogger(), Level.VERBOSE)
     Logger.addLogger(WebLogger(), Level.VERBOSE)
-    
+
 ### Streaming Log Server
 
     Logger.addLogger(WebLogger(), Level.VERBOSE)

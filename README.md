@@ -19,14 +19,14 @@ Convenient logger that adds support to having multiple different loggers and dif
 
 ## How to use
 
-1) Add a Logger
+### Add a Logger
 
     Logger.addLogger(LogcatLogger(), Level.VERBOSE)
     Logger.addLogger(SystemLogger(), Level.VERBOSE)
     Logger.addLogger(CrashlyticsLogger(), Level.VERBOSE)
     Logger.addLogger(WebLogger(), Level.VERBOSE)
 
-2) Log with different log levels:
+### Log with different log levels:
 
     logv("verbose message")
     logd("debug message")
@@ -34,7 +34,7 @@ Convenient logger that adds support to having multiple different loggers and dif
     logw("warning message")
     loge("error message")
 
-## Streaming Log Server
+### Streaming Log Server
 
     Logger.addLogger(WebLogger(), Level.VERBOSE)
     var loggingWebServer = LoggingWebServer(port, assets)

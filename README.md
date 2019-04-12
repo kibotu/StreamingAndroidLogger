@@ -41,6 +41,8 @@ Convenient logger that adds support to having multiple different loggers and dif
     loggingWebServer.start()
     loggingWebServer.stop()
 
+![demo](demo.gif)
+
 ### Log Levels
 
     VERBOSE

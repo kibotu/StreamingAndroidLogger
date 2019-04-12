@@ -82,6 +82,14 @@ android {
     }
 
     // endregion
+
+    // region exclude duplicated meta inf files
+
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
+
+    // endregion
 }
 
 dependencies {

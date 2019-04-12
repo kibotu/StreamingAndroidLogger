@@ -23,6 +23,8 @@ Convenient logger that adds support to having multiple different loggers and dif
 
     Logger.addLogger(LogcatLogger(), Level.VERBOSE)
     Logger.addLogger(SystemLogger(), Level.VERBOSE)
+    Logger.addLogger(CrashlyticsLogger(), Level.VERBOSE)
+    Logger.addLogger(WebLogger(), Level.VERBOSE)
 
 2) Log with different log levels:
 

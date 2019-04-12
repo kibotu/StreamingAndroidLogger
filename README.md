@@ -5,6 +5,15 @@
 
 Convenient logger that adds support to having multiple different loggers and different log levels for each one of them.
 
+### Streaming Log Server
+
+    Logger.addLogger(WebLogger(), Level.VERBOSE)
+    var loggingWebServer = LoggingWebServer(port, assets)
+    loggingWebServer.start()
+    loggingWebServer.stop()
+
+![demo](demo.gif)
+
 ## How to install
 
     repositories {
@@ -33,15 +42,6 @@ Convenient logger that adds support to having multiple different loggers and dif
     logi("info message")
     logw("warning message")
     loge("error message")
-
-### Streaming Log Server
-
-    Logger.addLogger(WebLogger(), Level.VERBOSE)
-    var loggingWebServer = LoggingWebServer(port, assets)
-    loggingWebServer.start()
-    loggingWebServer.stop()
-
-![demo](demo.gif)
 
 ### Log Levels
 

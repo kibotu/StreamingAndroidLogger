@@ -65,6 +65,10 @@ android {
     }
 
     // endregion
+
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
 }
 
 

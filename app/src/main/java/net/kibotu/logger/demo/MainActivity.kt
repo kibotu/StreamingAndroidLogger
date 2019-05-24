@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         Logger.addLogger(LogcatLogger(), Level.VERBOSE)
         Logger.addLogger(WebLogger(), Level.VERBOSE)
+        Logger.addLogger(UDPLogger(application, "logs.papertrailapp.com", 1337), Level.VERBOSE)
 
         testInvokerMethod()
         testLogLevels()

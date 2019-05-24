@@ -26,7 +26,7 @@ Convenient logger that adds support to having multiple different loggers and dif
     Logger.addLogger(LogcatLogger(), Level.VERBOSE)
     Logger.addLogger(SystemLogger(), Level.VERBOSE)
     Logger.addLogger(CrashlyticsLogger(), Level.WARNING)
-    Logger.addLogger(WebLogger(), Level.INFORMATION)
+    Logger.addLogger(WebLogger(), Level.INFO)
     Logger.addLogger(UDPLogger(this, "logs.papertrailapp.com", 8080), Level.INFO)
 
 ### Streaming Log Server

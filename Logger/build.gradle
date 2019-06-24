@@ -78,7 +78,7 @@ dependencies {
     implementation libs.supportAppCompat
     implementation libs.appCompatResources
     implementation libs.supportAnnotations
-    implementation libs.androidKtx
+    implementation libs.androidKtxCore
     implementation libs.gson
     compileOnly(libs.crashlytics) { transitive = true }
 
@@ -93,7 +93,7 @@ configurations.all {
     resolutionStrategy.force libs.supportAppCompat
     resolutionStrategy.force libs.appCompatResources
     resolutionStrategy.force libs.supportAnnotations
-    resolutionStrategy.force libs.androidKtx
+    resolutionStrategy.force libs.androidKtxCore
     resolutionStrategy.force libs.gson
 }
 

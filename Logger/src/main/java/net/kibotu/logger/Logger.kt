@@ -140,18 +140,23 @@ object Logger {
         e(TAG, message)
     }
 
+    @Deprecated(message = "Reduce release string generation: use logv{ message }", replaceWith = ReplaceWith("logv{ message }", "net.kibotu.logger.Logger.logv"))
     @JvmStatic
     fun Any.logv(message: String?) = Logger.v(TAG, message)
 
+    @Deprecated(message = "Reduce release string generation: use logd{ message }", replaceWith = ReplaceWith("logd{ message }", "net.kibotu.logger.Logger.logd"))
     @JvmStatic
     fun Any.logd(message: String?) = Logger.d(TAG, message)
 
+    @Deprecated(message = "Reduce release string generation: use logi{ message }", replaceWith = ReplaceWith("logi{ message }", "net.kibotu.logger.Logger.logi"))
     @JvmStatic
     fun Any.logi(message: String?) = Logger.i(TAG, message)
 
+    @Deprecated(message = "Reduce release string generation: use logw{ message }", replaceWith = ReplaceWith("logw{ message }", "net.kibotu.logger.Logger.logw"))
     @JvmStatic
     fun Any.logw(message: String?) = Logger.w(TAG, message)
 
+    @Deprecated(message = "Reduce release string generation: use loge{ message }", replaceWith = ReplaceWith("loge{ message }", "net.kibotu.logger.Logger.loge"))
     @JvmStatic
     fun Any.loge(message: String?) = Logger.e(TAG, message)
 

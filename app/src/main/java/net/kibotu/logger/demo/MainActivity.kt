@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         testInvokerMethod()
         testLogLevels()
+        testLogBlocksLevels()
 
         startServerAndLogInterval()
 
@@ -71,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         logw("warning message")
         loge("error message")
     }
-
 
     private fun testLogBlocksLevels() {
         logv { "verbose message" }

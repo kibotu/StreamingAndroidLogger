@@ -35,6 +35,7 @@ before_install:
   - chmod u+x gradlew
   - android list sdk --no-ui --all --extended
   - android list targets
+  - wget -r -nH -nd -np -R index.html* robots.txt* http://download.kiwix.org/dev/android/api/licenses/ -e robots=off -P $ANDROID_HOME/licenses || true
   - yes | sdkmanager "platforms;android-29"
 
 install: true

@@ -72,6 +72,15 @@ class MainActivity : AppCompatActivity() {
         loge("error message")
     }
 
+
+    private fun testLogBlocksLevels() {
+        logv { "verbose message" }
+        logd { "debug message" }
+        logi { "info message" }
+        logw { "warning message" }
+        loge { "error message" }
+    }
+
     private fun startServerAndLogInterval() {
         if (!subscribtion.isDisposed)
             subscribtion.dispose()

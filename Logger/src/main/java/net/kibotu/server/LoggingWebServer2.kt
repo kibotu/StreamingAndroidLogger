@@ -121,7 +121,7 @@ internal class LoggingWebServer2(
             var line = ""
             while (!isEmpty(line)) {
                 line = reader.readLine()
-                Logger.v(TAG, "[handle] " + line)
+                Logger.v(TAG, "[handle] $line")
                 if (line.startsWith("GET /")) {
                     val start = line.indexOf('/') + 1
                     val end = line.indexOf(' ', start)
@@ -140,7 +140,7 @@ internal class LoggingWebServer2(
 
             val uri = parseUri(pathAndParams!!)
 
-            Log.v(TAG, "[request] " + uri)
+            Log.v(TAG, "[request] $uri")
 
             val bytes = createResponse(pathAndParams)
             if (null == bytes) {
@@ -150,8 +150,8 @@ internal class LoggingWebServer2(
 
             // Send out the content.
             output.println("HTTP/1.0 200 OK")
-            output.println("Content-Type: " + detectMimeType(uri.path)!!)
-            output.println("Content-Length: " + bytes.size)
+            output.println("Content-Type: ${detectMimeType(uri.path!!)!!}")
+            output.println("Content-Length: ${bytes.size}")
             output.println()
             output.write(bytes)
             output.flush()
@@ -163,7 +163,7 @@ internal class LoggingWebServer2(
 
     @Throws(IOException::class)
     private fun createResponse(pathAndParams: String): ByteArray? {
-        Log.v(TAG, "[createResponse] " + pathAndParams)
+        Log.v(TAG, "[createResponse] $pathAndParams")
 
 
         return when (pathAndParams) {
@@ -174,7 +174,7 @@ internal class LoggingWebServer2(
                     list.add(queue.poll())
 
                 val s = toJson(list)
-                Log.v(TAG, "[response] " + s)
+                Log.v(TAG, "[response] $s")
                 s.toByteArray(Charset.forName("UTF-8"))
 
             }

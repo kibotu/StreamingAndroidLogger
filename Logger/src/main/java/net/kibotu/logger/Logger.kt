@@ -156,6 +156,51 @@ object Logger {
     fun Any.loge(message: String?) = Logger.e(TAG, message)
 
     @JvmStatic
+    fun Any.logv(block: () -> String?) {
+        loggers.forEach {
+            if (it.second <= Level.VERBOSE) {
+                it.first.verbose(TAG, "${block()}")
+            }
+        }
+    }
+
+    @JvmStatic
+    fun Any.logd(block: () -> String?) {
+        loggers.forEach {
+            if (it.second <= Level.DEBUG) {
+                it.first.verbose(TAG, "${block()}")
+            }
+        }
+    }
+
+    @JvmStatic
+    fun Any.logi(block: () -> String?) {
+        loggers.forEach {
+            if (it.second <= Level.INFO) {
+                it.first.verbose(TAG, "${block()}")
+            }
+        }
+    }
+
+    @JvmStatic
+    fun Any.logw(block: () -> String?) {
+        loggers.forEach {
+            if (it.second <= Level.WARNING) {
+                it.first.verbose(TAG, "${block()}")
+            }
+        }
+    }
+
+    @JvmStatic
+    fun Any.loge(block: () -> String?) {
+        loggers.forEach {
+            if (it.second <= Level.ERROR) {
+                it.first.verbose(TAG, "${block()}")
+            }
+        }
+    }
+
+    @JvmStatic
     fun e(throwable: Throwable?) {
         loggers.forEach {
             if (it.second <= Level.ERROR)

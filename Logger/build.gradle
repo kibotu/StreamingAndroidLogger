@@ -22,7 +22,12 @@ android {
 
     buildTypes {
         release {
+            pseudoLocalesEnabled false
+            debuggable false
             minifyEnabled false
+            crunchPngs true
+            shrinkResources false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -23,3 +23,7 @@
 -keep class net.kibotu.logger.** { *; }
 
 -keepattributes *Annotation*
+
+-keepparameternames
+
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod

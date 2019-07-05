@@ -21,3 +21,5 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class net.kibotu.logger.** { *; }
+
+-keepattributes *Annotation*

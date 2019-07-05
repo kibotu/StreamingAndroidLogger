@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class net.kibotu.logger.** { *; }
+-keep class net.kibotu.** { *; }
 
 -keepattributes *Annotation*
 

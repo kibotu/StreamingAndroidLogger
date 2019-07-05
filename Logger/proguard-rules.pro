@@ -22,8 +22,8 @@
 
 -keep class net.kibotu.** { *; }
 
--keepattributes *Annotation*
-
 -keepparameternames
 
--keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
+-keepattributes *Annotation*,Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
+
+-android

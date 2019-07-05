@@ -24,9 +24,8 @@ android {
         release {
             pseudoLocalesEnabled false
             debuggable false
-            minifyEnabled false
+            minifyEnabled true
             crunchPngs true
-            shrinkResources false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -94,12 +93,6 @@ configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
 
     resolutionStrategy.force libs.kotlinJdk8
-    resolutionStrategy.force libs.supportDesign
-    resolutionStrategy.force libs.supportAppCompat
-    resolutionStrategy.force libs.appCompatResources
-    resolutionStrategy.force libs.supportAnnotations
-    resolutionStrategy.force libs.androidKtxCore
-    resolutionStrategy.force libs.gson
 }
 
 apply from: "${project.rootDir}/Android-Dependencies/javadoc.gradle"

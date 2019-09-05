@@ -51,6 +51,17 @@ object Logger {
     fun addLogger(logger: ILogger, level: Level = Level.VERBOSE) = loggers.add(Pair(logger, level))
 
     /**
+     * Constructor.
+     *
+     * @param logger - Concrete Logger.
+     */
+    @JvmStatic
+    fun removeLogger(logger: ILogger) = loggers.removeAll { it.first == logger }
+
+    @JvmStatic
+    fun contains(logger: ILogger) = loggers.any { it.first == logger }
+
+    /**
      * Representing Verbose-Logging level.
      *
      * @param message - Actual logging message.

@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Convenient logger that adds support to having multiple different loggers and different log levels for each one of them.
+Convenient logger that adds support to having multiple different loggers and different log levels for each one of them. e.g. LogcatLogger, CrashlyticsLogger, On-Device-Weblogging, UDP (e.g. Papertrail), SystemLogging. 
 
 ![demo](demo.gif)
 

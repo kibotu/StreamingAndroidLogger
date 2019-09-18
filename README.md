@@ -38,11 +38,11 @@ Convenient logger that adds support to having multiple different loggers and dif
 
 ### Log with different log levels:
 
-    logv("verbose message")
-    logd("debug message")
-    logi("info message")
-    logw("warning message")
-    loge("error message")
+    logv { "verbose message" }
+    logd { "debug message" }
+    logi { "info message" }
+    logw { "warning message" }
+    loge { "error message" }
 
 ### Log Levels
 

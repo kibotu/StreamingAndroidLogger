@@ -128,12 +128,15 @@ fun snackbar(message: String)
 
 ## How to build
 
-    graldew clean build
+```shell
+graldew clean build
+```
 
 ### CI
 
-    gradlew clean assembleRelease test javadoc
-
+```shell
+gradlew clean assembleRelease test javadoc
+````
 #### Build Requirements
 
 - JDK8

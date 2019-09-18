@@ -8,113 +8,123 @@ Convenient logger that adds support to having multiple different loggers and dif
 ![demo](demo.gif)
 
 ## How to install
-
-    repositories {
-        maven {
-            url "https://jitpack.io"
-        }
+```groovy
+repositories {
+    maven {
+        url "https://jitpack.io"
     }
+}
 
-    dependencies {
-        implementation 'com.github.kibotu:StreamingAndroidLogger:-SNAPSHOT'
-    }
-
+dependencies {
+    implementation 'com.github.kibotu:StreamingAndroidLogger:-SNAPSHOT'
+}
+```
 ## How to use
 
 ### Add a Logger
 
-    Logger.addLogger(LogcatLogger(), Level.VERBOSE)
-    Logger.addLogger(SystemLogger(), Level.VERBOSE)
-    Logger.addLogger(CrashlyticsLogger(), Level.WARNING)
-    Logger.addLogger(WebLogger(), Level.INFO)
-    Logger.addLogger(UDPLogger(this, "logs.papertrailapp.com", 8080), Level.INFO)
+```kotlin
+Logger.addLogger(LogcatLogger(), Level.VERBOSE)
+Logger.addLogger(SystemLogger(), Level.VERBOSE)
+Logger.addLogger(CrashlyticsLogger(), Level.WARNING)
+Logger.addLogger(WebLogger(), Level.INFO)
+Logger.addLogger(UDPLogger(this, "logs.papertrailapp.com", 8080), Level.INFO)
+```
 
 ### Streaming Log Server
 
-    Logger.addLogger(WebLogger(), Level.VERBOSE)
-    var loggingWebServer = LoggingWebServer(port, assets)
-    loggingWebServer.start()
-    loggingWebServer.stop()
+```kotlin
+Logger.addLogger(WebLogger(), Level.VERBOSE)
+var loggingWebServer = LoggingWebServer(port, assets)
+loggingWebServer.start()
+loggingWebServer.stop()
+```
 
 ### Log with different log levels:
 
-    logv { "verbose message" }
-    logd { "debug message" }
-    logi { "info message" }
-    logw { "warning message" }
-    loge { "error message" }
+```kotlin
+logv { "verbose message" }
+logd { "debug message" }
+logi { "info message" }
+logw { "warning message" }
+loge { "error message" }
+````
 
 ### Log Levels
 
-    VERBOSE
-    DEBUG
-    INFO
-    WARNING
-    ERROR
-    SILENT
+```kotlin
+VERBOSE
+DEBUG
+INFO
+WARNING
+ERROR
+SILENT
+```
 
 ### ILogger interface
 
-    /**
-     * Debug Message.
-     *
-     * @param tag     - Application Tag.
-     * @param message - Logging message.
-     */
-    fun debug(tag: String, message: String)
+```kotlin
+/**
+ * Debug Message.
+ *
+ * @param tag     - Application Tag.
+ * @param message - Logging message.
+ */
+fun debug(tag: String, message: String)
 
-    /**
-     * Debug Message.
-     *
-     * @param tag     - Application Tag.
-     * @param message - Logging message.
-     */
-    fun verbose(tag: String, message: String)
+/**
+ * Debug Message.
+ *
+ * @param tag     - Application Tag.
+ * @param message - Logging message.
+ */
+fun verbose(tag: String, message: String)
 
-    /**
-     * Information Message.
-     *
-     * @param tag     - Application Tag.
-     * @param message - Logging message.
-     */
-    fun information(tag: String, message: String)
+/**
+ * Information Message.
+ *
+ * @param tag     - Application Tag.
+ * @param message - Logging message.
+ */
+fun information(tag: String, message: String)
 
-    /**
-     * Warning Message.
-     *
-     * @param tag     - Application Tag.
-     * @param message - Logging message.
-     */
-    fun warning(tag: String, message: String)
+/**
+ * Warning Message.
+ *
+ * @param tag     - Application Tag.
+ * @param message - Logging message.
+ */
+fun warning(tag: String, message: String)
 
-    /**
-     * Error Message.
-     *
-     * @param tag     - Application Tag.
-     * @param message - Logging message.
-     */
-    fun error(tag: String, message: String)
+/**
+ * Error Message.
+ *
+ * @param tag     - Application Tag.
+ * @param message - Logging message.
+ */
+fun error(tag: String, message: String)
 
-    /**
-     * Handle caught exception.
-     *
-     * @param throwable - Exception
-     */
-    fun exception(throwable: Throwable)
+/**
+ * Handle caught exception.
+ *
+ * @param throwable - Exception
+ */
+fun exception(throwable: Throwable)
 
-    /**
-     * Toast message.
-     *
-     * @param message - Displayed message.
-     */
-    fun toast(message: String)
+/**
+ * Toast message.
+ *
+ * @param message - Displayed message.
+ */
+fun toast(message: String)
 
-    /**
-     * Snackbar message.
-     *
-     * @param message - Displayed message.
-     */
-    fun snackbar(message: String)
+/**
+ * Snackbar message.
+ *
+ * @param message - Displayed message.
+ */
+fun snackbar(message: String)
+```
 
 ## How to build
 

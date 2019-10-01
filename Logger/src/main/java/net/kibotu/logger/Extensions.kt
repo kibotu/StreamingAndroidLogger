@@ -10,7 +10,7 @@ import net.kibotu.ContextHelper
 
 
 val Any.TAG: String
-    get () = this::class.java.simpleName
+    get() = this::class.java.simpleName.apply { substring(0, 23.coerceAtMost(this.length)) }
 
 val Collection<*>?.isEmpty
     get() = this == null || this.isEmpty()

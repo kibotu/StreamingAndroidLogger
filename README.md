@@ -142,10 +142,13 @@ gradlew clean assembleRelease test javadoc
 - JDK8
 - Android Build Tools 29.0.2
 - Android SDK 29
+### Notes
 
-## Contributors
+Follow me on Twitter: [@wolkenschauer](https://twitter.com/wolkenschauer)
 
-- [Jan Rabe](jan.rabe@kibotu.net)
+Let me know what you think: [jan.rabe@kibotu.net](mailto:jan.rabe@kibotu.net)
+
+Contributions welcome!
 
 ### License
 

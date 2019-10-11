@@ -142,6 +142,20 @@ gradlew clean assembleRelease test javadoc
 - JDK8
 - Android Build Tools 29.0.2
 - Android SDK 29
+
+
+### Notes
+
+In case you don't use the weblogger in release, add this to your build.gradle, to remove weblogging files
+```groovy
+release {
+    […]
+    aaptOptions {
+        ignoreAssetsPattern "!html:!StreamingLogger:"
+    }
+}
+``` 
+
 ### Notes
 
 Follow me on Twitter: [@wolkenschauer](https://twitter.com/wolkenschauer)

@@ -164,7 +164,7 @@ object Logger {
     fun Any.logd(block: () -> String?) {
         loggers.forEach {
             if (it.second <= Level.DEBUG) {
-                it.first.verbose(TAG, "${block()}")
+                it.first.debug(TAG, "${block()}")
             }
         }
     }
@@ -182,7 +182,7 @@ object Logger {
     fun Any.logw(block: () -> String?) {
         loggers.forEach {
             if (it.second <= Level.WARNING) {
-                it.first.verbose(TAG, "${block()}")
+                it.first.warning(TAG, "${block()}")
             }
         }
     }
@@ -191,7 +191,7 @@ object Logger {
     fun Any.loge(block: () -> String?) {
         loggers.forEach {
             if (it.second <= Level.ERROR) {
-                it.first.verbose(TAG, "${block()}")
+                it.first.error(TAG, "${block()}")
             }
         }
     }

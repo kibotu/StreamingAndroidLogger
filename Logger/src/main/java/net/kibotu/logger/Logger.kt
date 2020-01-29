@@ -173,7 +173,7 @@ object Logger {
     fun Any.logi(block: () -> String?) {
         loggers.forEach {
             if (it.second <= Level.INFO) {
-                it.first.verbose(TAG, "${block()}")
+                it.first.information(TAG, "${block()}")
             }
         }
     }

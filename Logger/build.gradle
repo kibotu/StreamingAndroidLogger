@@ -3,11 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'org.jetbrains.dokka-android'
 
 android {
 
     compileSdkVersion compileSdkVer
     buildToolsVersion buildToolsVer
+
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
 
     defaultConfig {
 
@@ -36,6 +42,14 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // endregion
+
+    // region compile options
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     // endregion
@@ -94,5 +108,3 @@ configurations.all {
 
     resolutionStrategy.force libs.kotlinJdk8
 }
-
-apply from: "${project.rootDir}/Android-Dependencies/javadoc.gradle"

@@ -1,20 +1,21 @@
 package net.kibotu.logger.demo
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.appcompat.app.AppCompatActivity
-import com.exozet.android.core.extensions.openExternally
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 import net.kibotu.logger.*
-import net.kibotu.logger.Logger.logd
-import net.kibotu.logger.Logger.loge
-import net.kibotu.logger.Logger.logi
-import net.kibotu.logger.Logger.logv
-import net.kibotu.logger.Logger.logw
+import net.kibotu.logger.Logger.d
+import net.kibotu.logger.Logger.e
+import net.kibotu.logger.Logger.i
+import net.kibotu.logger.Logger.v
+import net.kibotu.logger.Logger.w
 import net.kibotu.server.LoggingWebServer
 import net.kibotu.server.ResponseMessage
 import net.kibotu.server.formattedIpAddress
@@ -46,19 +47,18 @@ class MainActivity : AppCompatActivity() {
 
         testInvokerMethod()
         testLogLevels()
-        testLogBlocksLevels()
 
         startServerAndLogInterval()
 
         val openBrowserMessage = openBrowserMessage(port)
-        logv(openBrowserMessage)
+        v(openBrowserMessage)
 
         snack(openBrowserMessage, "Open in Browser") {
             "http://$formattedIpAddress:$port".openExternally()
         }
 
-        content.movementMethod = LinkMovementMethod.getInstance()
-        content.text = openBrowserMessage
+        // content.movementMethod = LinkMovementMethod.getInstance()
+        // content.text = openBrowserMessage
     }
 
     private fun testInvokerMethod() {
@@ -66,19 +66,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testLogLevels() {
-        logv("verbose message")
-        logd("debug message")
-        logi("info message")
-        logw("warning message")
-        loge("error message")
-    }
-
-    private fun testLogBlocksLevels() {
-        logv { "verbose message" }
-        logd { "debug message" }
-        logi { "info message" }
-        logw { "warning message" }
-        loge { "error message" }
+        v("verbose message")
+        d("debug message")
+        i("info message")
+        w("warning message")
+        e("error message")
     }
 
     private fun startServerAndLogInterval() {
@@ -91,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
 
-                logv("${ResponseMessage(it)}")
+                v("${ResponseMessage(it)}")
 
             }, { it.printStackTrace() }))
 
@@ -112,6 +104,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun invokeMe() {
-        logv(Logger.invoker())
+        v(Logger.invoker())
+    }
+
+
+    fun String.openExternally() {
+
+        var result = this
+
+        if (!result.startsWith("http://") && !result.startsWith("https://")) {
+            result = "http://$this"
+        }
+
+        application
+            ?.startActivity(
+                Intent(Intent.ACTION_VIEW)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                    }
+                    data = Uri.parse(result)
+                })
     }
 }

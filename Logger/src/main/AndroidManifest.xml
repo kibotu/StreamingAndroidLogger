@@ -4,14 +4,4 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <application>
-
-        <provider
-            android:name=".ContextProvider"
-            android:authorities="${applicationId}.ContextProvider"
-            android:exported="false"
-            android:initOrder="1" />
-
-    </application>
-
 </manifest>

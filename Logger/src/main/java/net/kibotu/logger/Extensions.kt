@@ -5,8 +5,8 @@ package net.kibotu.logger
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import com.github.florent37.application.provider.ActivityProvider.currentActivity
 import com.google.android.material.snackbar.Snackbar
-import net.kibotu.ContextHelper
 
 
 val Any.TAG: String
@@ -16,7 +16,7 @@ val Collection<*>?.isEmpty
     get() = this == null || this.isEmpty()
 
 internal val getContentRoot: View?
-    get() = ContextHelper.getActivity()
+    get() = currentActivity
         ?.window
         ?.decorView
         ?.findViewById(android.R.id.content)

@@ -9,8 +9,9 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.github.florent37.application.provider.ActivityProvider.currentActivity
+import com.github.florent37.application.provider.application
 import com.google.android.material.snackbar.Snackbar
-import net.kibotu.ContextHelper.getContext
 
 /**
  * Created by [Jan Rabe](https://about.me/janrabe).
@@ -47,7 +48,7 @@ class LogcatLogger : ILogger {
             return
 
         Handler(Looper.getMainLooper()).post {
-            val context = getContext()
+            val context = currentActivity
             if (context == null) {
                 debug(LogcatLogger::class.java.simpleName, message)
                 return@post

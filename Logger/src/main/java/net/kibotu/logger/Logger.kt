@@ -1,7 +1,6 @@
 package net.kibotu.logger
 
 import android.app.Application
-import net.kibotu.ContextHelper
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -31,16 +30,6 @@ object Logger {
      * Concrete Logger.
      */
     private var loggers = CopyOnWriteArrayList<Pair<ILogger, Level>>()
-
-    @Deprecated("no longer required", ReplaceWith(""))
-    @JvmStatic
-    fun with(context: Application) = Unit
-
-    @Deprecated("no longer required", ReplaceWith(""))
-    @JvmStatic
-    fun onTerminate() {
-        ContextHelper.onTerminate()
-    }
 
     /**
      * Constructor.
@@ -152,51 +141,6 @@ object Logger {
     }
 
     @JvmStatic
-    fun Any.logv(block: () -> String?) {
-        loggers.forEach {
-            if (it.second <= Level.VERBOSE) {
-                it.first.verbose(TAG, "${block()}")
-            }
-        }
-    }
-
-    @JvmStatic
-    fun Any.logd(block: () -> String?) {
-        loggers.forEach {
-            if (it.second <= Level.DEBUG) {
-                it.first.debug(TAG, "${block()}")
-            }
-        }
-    }
-
-    @JvmStatic
-    fun Any.logi(block: () -> String?) {
-        loggers.forEach {
-            if (it.second <= Level.INFO) {
-                it.first.information(TAG, "${block()}")
-            }
-        }
-    }
-
-    @JvmStatic
-    fun Any.logw(block: () -> String?) {
-        loggers.forEach {
-            if (it.second <= Level.WARNING) {
-                it.first.warning(TAG, "${block()}")
-            }
-        }
-    }
-
-    @JvmStatic
-    fun Any.loge(block: () -> String?) {
-        loggers.forEach {
-            if (it.second <= Level.ERROR) {
-                it.first.error(TAG, "${block()}")
-            }
-        }
-    }
-
-    @JvmStatic
     fun e(throwable: Throwable?) {
         loggers.forEach {
             if (it.second <= Level.ERROR)
@@ -221,26 +165,8 @@ object Logger {
     }
 
     @JvmStatic
-    inline infix fun Any.paul(message: String?) = logv("!!!PAUL!!!! $message !!!!")
-
-    @JvmStatic
     fun invoker(): String = Throwable().stackTrace[2].toString()
 
     @JvmStatic
-    fun printInvoker(): Unit = logv(Throwable().stackTrace[2].toString())
+    fun printInvoker(): Unit = v(Throwable().stackTrace[2].toString())
 }
-
-@Deprecated(message = "Reduce release string generation: use logv{ message }", replaceWith = ReplaceWith("logv{ message }", "net.kibotu.logger.Logger.logv"))
-fun Any.logv(message: String?) = Logger.v(TAG, message)
-
-@Deprecated(message = "Reduce release string generation: use logd{ message }", replaceWith = ReplaceWith("logd{ message }", "net.kibotu.logger.Logger.logd"))
-fun Any.logd(message: String?) = Logger.d(TAG, message)
-
-@Deprecated(message = "Reduce release string generation: use logi{ message }", replaceWith = ReplaceWith("logi{ message }", "net.kibotu.logger.Logger.logi"))
-fun Any.logi(message: String?) = Logger.i(TAG, message)
-
-@Deprecated(message = "Reduce release string generation: use logw{ message }", replaceWith = ReplaceWith("logw{ message }", "net.kibotu.logger.Logger.logw"))
-fun Any.logw(message: String?) = Logger.w(TAG, message)
-
-@Deprecated(message = "Reduce release string generation: use loge{ message }", replaceWith = ReplaceWith("loge{ message }", "net.kibotu.logger.Logger.loge"))
-fun Any.loge(message: String?) = Logger.e(TAG, message)

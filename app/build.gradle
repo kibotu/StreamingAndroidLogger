@@ -1,20 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'realm-android'
-apply plugin: 'org.jetbrains.dokka-android'
 
 android {
 
     compileSdkVersion compileSdkVer
     buildToolsVersion buildToolsVer
-
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
-    }
 
     defaultConfig {
         multiDexEnabled true
@@ -24,15 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     // region build types
@@ -64,6 +46,33 @@ android {
 
     // endregion
 
+    // region java compile options
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
+    }
+
+    // endregion
+
+    // region kotlin compile options
+
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs += [
+                // disable linting for opt-in annotations
+                "-Xopt-in=kotlin.RequiresOptIn",
+        ]
+    }
+
+    // endregion
+
     // region lint options
 
     lintOptions {
@@ -77,11 +86,15 @@ android {
 
     // endregion
 
-    // region dex options
+    // region lint options
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-        maxProcessCount 8
+    lintOptions {
+        disable 'InvalidPackage'
+        abortOnError false        // true by default
+        checkAllWarnings false
+        checkReleaseBuilds false
+        ignoreWarnings true       // false by default
+        quiet true                // false by default
     }
 
     // endregion
@@ -93,33 +106,25 @@ android {
     }
 
     // endregion
-
-    // region exclude duplicated meta inf files
-
-    packagingOptions {
-        exclude 'META-INF/library-core_release.kotlin_module'
-    }
-
-    // endregion
 }
 
 dependencies {
 
-    implementation libs.kotlinJdk8
-    implementation libs.supportMultidex
-    implementation libs.supportAppCompat
+    implementation libs.multidex
+    implementation libs.appCompat
     implementation libs.appCompatResources
-    implementation libs.constraintLayout2
+    implementation libs.material
+    implementation libs.constraintlayout
     implementation libs.androidKtxCore
 
     implementation libs.gson
 
+    implementation libs.applicationProvider
+
     implementation libs.rx2java
     implementation libs.rx2Android
 
-    implementation (libs.exozetCore) {
-        exclude module: 'StreamingAndroidLogger'
-    }
+    implementation libs.crashlytics
 
     implementation project(':Logger')
 
@@ -132,11 +137,6 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
-    resolutionStrategy.force libs.kotlinJdk8
-    resolutionStrategy.force libs.supportAppCompat
-    resolutionStrategy.force libs.appCompatResources
-    resolutionStrategy.force libs.constraintLayout2
-    resolutionStrategy.force libs.androidKtxCore
 }
 
 // endregion

@@ -1,41 +1,27 @@
+apply plugin: 'jacoco'
+
 buildscript {
 
-    apply from: "${project.rootDir}/Android-Dependencies/dependencies.gradle"
+    apply from: "${project.rootDir}/dependencies.gradle"
 
     repositories {
         google()
-        // https://storage-download.googleapis.com/maven-central/index.html
-        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
 
-        // realm beta
-        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
     dependencies {
         classpath plugin.gradleBuildTools
         classpath plugin.kotlinGradle
-        classpath plugin.kotlinApt
-        classpath pluginLibrary.mavenGradle
-        classpath plugin.dexcountGradle
-        classpath plugin.kotlinDokka
-        classpath plugin.realmBeta
     }
 }
 
 allprojects {
 
-    apply from: "${project.rootDir}/Android-Dependencies/utils.gradle"
-
     repositories {
         google()
-        // https://storage-download.googleapis.com/maven-central/index.html
-        maven { url 'https://maven-central-eu.storage-download.googleapis.com/repos/central/data/' }
-        maven { url 'https://plugins.gradle.org/m2/' }
+        mavenCentral()
         maven { url 'https://jitpack.io' }
-
-        // realm beta
-        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
 }
 

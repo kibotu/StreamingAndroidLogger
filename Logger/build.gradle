@@ -1,26 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.getkeepsafe.dexcount'
-apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'maven-publish'
 
 android {
 
     compileSdkVersion compileSdkVer
     buildToolsVersion buildToolsVer
 
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
-    }
-
     defaultConfig {
 
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -37,19 +30,29 @@ android {
         }
     }
 
-    // region java compiler flags
+    // region java compile options
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
     }
 
     // endregion
 
-    // region compile options
+    // region kotlin compile options
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "11"
+        freeCompilerArgs += [
+                // disable linting for opt-in annotations
+                "-Xopt-in=kotlin.RequiresOptIn",
+        ]
     }
 
     // endregion
@@ -67,15 +70,6 @@ android {
 
     // endregion
 
-    // region dex options
-
-    dexOptions {
-        javaMaxHeapSize "4g"
-        maxProcessCount 8
-    }
-
-    // endregion
-
     // region adb options
 
     adbOptions {
@@ -83,28 +77,31 @@ android {
     }
 
     // endregion
-
-    packagingOptions {
-        exclude 'META-INF/library-core_release.kotlin_module'
-    }
 }
 
 
 dependencies {
-    implementation libs.kotlinJdk8
-    implementation libs.supportDesign
-    implementation libs.supportAppCompat
-    implementation libs.appCompatResources
-    implementation libs.supportAnnotations
+    implementation libs.appCompat
     implementation libs.androidKtxCore
+    implementation libs.material
     implementation libs.gson
     compileOnly(libs.crashlytics) { transitive = true }
-
-    api libs.applicationProvider
+    compileOnly libs.applicationProvider
 }
 
 configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
+}
 
-    resolutionStrategy.force libs.kotlinJdk8
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "com.github.kibotu"
+                artifactId = 'StreamingAndroidLogger'
+                version = VERSION_NAME
+            }
+        }
+    }
 }

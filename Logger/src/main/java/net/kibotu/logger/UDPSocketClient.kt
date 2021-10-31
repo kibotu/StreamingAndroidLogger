@@ -158,7 +158,8 @@ class UDPSocketClient(val ip: String, val port: Int) {
 
     private fun createActivityLifecycleCallbacks(): Application.ActivityLifecycleCallbacks {
         return object : Application.ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, bundle: Bundle) {
+
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 start()
             }
 

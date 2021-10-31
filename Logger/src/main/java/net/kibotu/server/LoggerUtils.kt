@@ -7,12 +7,12 @@ package net.kibotu.server
 
 import android.content.Context
 import android.net.wifi.WifiManager
-import net.kibotu.ContextHelper
+import com.github.florent37.application.provider.application
 
 fun openBrowserMessage(port: Int) = "Open http://$formattedIpAddress:$port in your browser. If website can't be found: make sure device and pc are on the same network segment."
 
 val ipAddress
-    get() = (ContextHelper.getApplication()?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as? WifiManager)
+    get() = (application?.getSystemService(Context.WIFI_SERVICE) as? WifiManager)
         ?.connectionInfo
         ?.ipAddress
         ?: 0

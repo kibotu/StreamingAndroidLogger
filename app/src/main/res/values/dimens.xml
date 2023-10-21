@@ -1,0 +1,9 @@
+<resources>
+    <!--    to add Default values to layout we are making....we create these type of dimens and add these parameter at top of activity main so it applies to all-->
+    <dimen name="width_zero_dp">0dp</dimen>
+    <dimen name="thirty_two_dp">32dp</dimen>
+
+    <!--text size-->
+    <dimen name="twenty_four_sp">24sp</dimen>
+
+</resources>

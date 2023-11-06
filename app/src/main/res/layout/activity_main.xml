@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="32dp"
+        android:layout_width="@dimens/width_zero_dp"
+        android:layout_height="@dimens/width_zero_dp"
+        android:layout_margin="@dimens/thirty_two_dp"
         android:autoLink="all"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="@dimens/twenty_four_sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

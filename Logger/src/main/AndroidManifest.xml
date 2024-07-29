@@ -1,6 +1,5 @@
 <manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.kibotu.logger">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 

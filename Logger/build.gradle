@@ -5,15 +5,20 @@ apply plugin: 'maven-publish'
 
 android {
 
-    compileSdkVersion compileSdkVer
-    buildToolsVersion buildToolsVer
+    compileSdk compileSdkVer
+    buildToolsVersion = buildToolsVer
+
+    namespace "net.kibotu.logger"
 
     defaultConfig {
 
-        minSdkVersion minSdkVer
-        targetSdkVersion targetSdkVer
+        minSdk minSdkVer
+        targetSdk targetSdkVer
+
         versionCode VERSION_CODE
         versionName VERSION_NAME
+
+        resConfigs "en"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -23,23 +28,21 @@ android {
         release {
             pseudoLocalesEnabled false
             debuggable false
-            minifyEnabled true
-            crunchPngs true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     // region java compile options
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     java {
         toolchain {
-            languageVersion.set(JavaLanguageVersion.of(11))
+            languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
 
@@ -48,7 +51,7 @@ android {
     // region kotlin compile options
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
         freeCompilerArgs += [
                 // disable linting for opt-in annotations
                 "-Xopt-in=kotlin.RequiresOptIn",
@@ -87,10 +90,6 @@ dependencies {
     implementation libs.gson
     compileOnly(libs.crashlytics) { transitive = true }
     compileOnly libs.applicationProvider
-}
-
-configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
 }
 
 afterEvaluate {

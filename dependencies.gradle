@@ -4,7 +4,7 @@ ext {
     minSdkVer = 21
 
     compileSdkVer = 35
-    buildToolsVer = "34.0.0"
+    buildToolsVer = "35.0.0"
     targetSdkVer = 35
 
     // @see https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
